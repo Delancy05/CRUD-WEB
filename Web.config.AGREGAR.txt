@@ -1,0 +1,14 @@
+Abre el Web.config de TU proyecto CRUD y agrega esto DENTRO de <configuration>
+(no reemplaces el archivo, solo agrega estos dos bloques):
+
+  <appSettings>
+    <add key="ValidationSettings:UnobtrusiveValidationMode" value="None" />
+  </appSettings>
+
+  <connectionStrings>
+    <add name="conexion"
+         connectionString="Server=localhost; Port=3306; Database=crudasp; Uid=root; Pwd=Shupy2006; CharSet=utf8mb4; AllowPublicKeyRetrieval=true;"
+         providerName="MySql.Data.MySqlClient" />
+  </connectionStrings>
+
+Si ya existe <appSettings>, solo agrega la línea <add .../> dentro de ese.

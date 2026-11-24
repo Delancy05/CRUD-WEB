@@ -1,0 +1,138 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="CRUD.Site" %>
+
+<!DOCTYPE html>
+
+<html lang="es" data-bs-theme="dark">
+<head runat="server">
+    <!-- ===== Metadatos (clase "Metadatos") ===== -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Chelsy Ríos" />
+    <meta name="description" content="CRUD de usuarios en ASP.NET Web Forms (.NET Framework 4.8) con MySQL, procedimientos almacenados y Bootstrap 5. Proyecto de la Universidad Tecnológica de Panamá." />
+    <!-- Mientras el sitio está en desarrollo no queremos que los buscadores lo indexen.
+         Cambiar a "index, follow" cuando se publique. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0b0f1a" />
+
+    <!-- Open Graph (tarjeta al compartir el enlace). og:url y og:image se llenan en Site.Master.cs -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_PA" />
+    <meta property="og:site_name" content="CRUD de Usuarios" />
+    <meta property="og:title" content="CRUD de Usuarios · ASP.NET Web Forms + MySQL" />
+    <meta property="og:description" content="Crear, consultar, modificar y eliminar usuarios con ASP.NET Web Forms, MySQL y Bootstrap 5." />
+    <meta id="metaOgUrl" runat="server" property="og:url" content="" />
+    <meta id="metaOgImage" runat="server" property="og:image" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" runat="server" />
+
+    <title>CRUD de Usuarios</title>
+
+    <!-- Bootstrap local (Opción B recomendada en la clase: copiado en la carpeta css/) y estilos propios -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" runat="server" />
+    <link rel="stylesheet" href="~/css/site.css" runat="server" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <!-- ===== Barra de navegación (principio del body) ===== -->
+    <nav class="navbar navbar-expand-md fixed-top app-nav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="<%= ResolveUrl("~/pages/Index.aspx") %>">
+                <img src="<%= ResolveUrl("~/img/logo.png") %>" alt="Logo" class="brand-logo" style="width:40px;height:40px;object-fit:contain;display:block;" />
+                <span class="fw-semibold">CRUD <span class="text-accent">Usuarios</span></span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                aria-controls="menuPrincipal" aria-expanded="false" aria-label="Mostrar u ocultar el menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a id="lnkListado" runat="server" class="nav-link" href="~/pages/Index.aspx">Listado</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="lnkNuevo" runat="server" class="nav-link" href="~/pages/Crud.aspx?op=C">Crear usuario</a>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#panelGuia" aria-controls="panelGuia">
+                    Guía del proyecto
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container app-main">
+        <!-- Breadcrumb: migas de pan -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<%= ResolveUrl("~/pages/Index.aspx") %>">Inicio</a></li>
+                <asp:ContentPlaceHolder ID="breadcrumb" runat="server">
+                </asp:ContentPlaceHolder>
+            </ol>
+        </nav>
+
+        <asp:ContentPlaceHolder ID="body" runat="server">
+        </asp:ContentPlaceHolder>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container d-flex flex-column flex-md-row justify-content-between gap-1">
+            <span>CRUD de Usuarios · ASP.NET Web Forms + MySQL + Bootstrap 5</span>
+            <span>Universidad Tecnológica de Panamá · <%= DateTime.Now.Year %></span>
+        </div>
+    </footer>
+
+    <!-- ===== Offcanvas: panel lateral oculto ===== -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="panelGuia" aria-labelledby="panelGuiaTitulo">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="panelGuiaTitulo">Guía del proyecto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h6 class="text-uppercase small text-secondary">Tecnologías</h6>
+            <p class="d-flex flex-wrap gap-2">
+                <span class="badge rounded-pill text-bg-primary">ASP.NET Web Forms</span>
+                <span class="badge rounded-pill text-bg-secondary">.NET Framework 4.8</span>
+                <span class="badge rounded-pill text-bg-info">MySQL</span>
+                <span class="badge rounded-pill text-bg-success">Bootstrap 5.3</span>
+                <span class="badge rounded-pill text-bg-warning">Biblioteca de clases</span>
+            </p>
+
+            <h6 class="text-uppercase small text-secondary mt-4">Operaciones del CRUD</h6>
+            <p class="small text-secondary">
+                La página <code>Crud.aspx</code> cambia según el parámetro <code>op</code> de la URL:
+            </p>
+            <ul class="list-group list-group-flush small mb-4">
+                <li class="list-group-item bg-transparent"><code>?op=C</code> · Crear (insert_user)</li>
+                <li class="list-group-item bg-transparent"><code>?op=R&amp;id=1</code> · Consultar (sp_read)</li>
+                <li class="list-group-item bg-transparent"><code>?op=U&amp;id=1</code> · Modificar (sp_update)</li>
+                <li class="list-group-item bg-transparent"><code>?op=D&amp;id=1</code> · Eliminar (sp_delete, borrado lógico)</li>
+            </ul>
+
+            <h6 class="text-uppercase small text-secondary">Navegación</h6>
+            <div class="d-grid gap-2">
+                <a class="btn btn-outline-info btn-sm" href="<%= ResolveUrl("~/pages/Index.aspx") %>">Ir al listado</a>
+                <a class="btn btn-outline-success btn-sm" href="<%= ResolveUrl("~/pages/Crud.aspx?op=C") %>">Crear un usuario</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Spinner de carga (se muestra al enviar un formulario) ===== -->
+    <div id="loader" class="loader-overlay d-none" aria-hidden="true">
+        <div class="spinner-border text-info" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <script src="<%= ResolveUrl("~/js/bootstrap.bundle.min.js") %>"></script>
+    <script src="<%= ResolveUrl("~/js/site.js") %>"></script>
+    <asp:ContentPlaceHolder ID="scripts" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>
